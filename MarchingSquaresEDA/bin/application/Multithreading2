@@ -1,0 +1,130 @@
+package application;
+import java.util.ArrayList;
+import javafx.scene.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+
+public class Multithreading2 extends Thread{
+	int i;
+	int cols;
+	int filas;
+	int separacion;
+	Group group;
+	int[][] celdas;
+	public Multithreading2(int i,int cols,int filas,int separacion, int[][] celdas, Group group){
+		this.i = i;
+		this.cols = cols;
+		this.filas = filas;
+		this.separacion = separacion;
+		this.celdas = new int[cols][filas];
+		this.celdas = celdas;
+		this.group = group;
+	}
+	
+	
+	@Override
+	public void run() {
+		for (int j = filas/2; j < filas - 1; j++){
+            Line line;
+            double x = i * separacion;
+            double y = j * separacion;
+             ArrayList<Double> a =new ArrayList<Double>();
+             a.add(x+separacion*0.5);
+             a.add(y);
+             ArrayList<Double> b =new ArrayList<Double>();
+             b.add(x+separacion);
+             b.add(y+separacion*0.5);
+             ArrayList<Double> c =new ArrayList<Double>();
+             c.add(x+separacion*0.5);
+             c.add(y+separacion);
+             ArrayList<Double> d =new ArrayList<Double>();
+             d.add(x);
+             d.add(y+separacion*0.5);
+             
+            int state = getState(celdas[i][j], celdas[i+1][j], celdas[i+1][j+1], celdas [i][j+1]); 
+            switch (state) {
+               case 1:  
+                 line = new Line(c.get(0),c.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);   
+                 break;
+               case 2:  
+                 line = new Line(b.get(0),b.get(1),c.get(0),c.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line); 
+                 break;
+               case 3:  
+                 line = new Line(d.get(0),d.get(1),b.get(0),b.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 4:  
+                 line = new Line(a.get(0),a.get(1),b.get(0),b.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 5:  
+                 line = new Line(a.get(0),a.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 line = new Line(b.get(0),b.get(1),c.get(0),c.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 6:  
+                 line = new Line(a.get(0),a.get(1),c.get(0),c.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 7:  
+                 line = new Line(a.get(0),a.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 8:  
+                 line = new Line(a.get(0),a.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 9:  
+                 line = new Line(a.get(0),a.get(1),c.get(0),c.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 10: 
+                 line = new Line(a.get(0),a.get(1),b.get(0),b.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 line = new Line(c.get(0),c.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 11: 
+                 line = new Line(a.get(0),a.get(1),b.get(0),b.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 12: 
+                 line = new Line(b.get(0),b.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 13: 
+                 line = new Line(b.get(0),b.get(1),c.get(0),c.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                 break;
+               case 14: 
+                 line = new Line(c.get(0),c.get(1),d.get(0),d.get(1));
+                 line.setStroke(Color.WHITE);
+                 group.getChildren().add(line);
+                  
+             }
+	}
+}
+
+
+	private int getState(int a, int b, int c, int d) {
+        return a * 8 + b * 4  + c * 2 + d * 1;
+    } 
+}
